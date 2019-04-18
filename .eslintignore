@@ -1,0 +1,4 @@
+/build/js/
+/*.js
+/js-test/unit/coverage/
+/resources/js/localization/vue-i18n-locales.generated.js

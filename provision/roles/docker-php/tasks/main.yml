@@ -1,0 +1,28 @@
+- name: Create docker network
+  docker_network:
+    name: "{{ php_network }}"
+    state: present
+
+- name: Run web server
+  docker_container:
+    image: "ooga04/php:{{ php_tag }}"
+    labels:
+      traefik.enable: "false"
+    name: "{{ php_container_name }}"
+    networks:
+      - name: "{{ php_network }}"
+    ports:
+      - "80:80"
+      - "9001:9001"
+    pull: true
+    restart_policy: always
+    state: started
+    volumes:
+      - "{{ php_app_deploy_path }}:/var/www/html"
+- name: Change Document Root
+  command: "docker exec {{ php_container_name }} sed -ri -e 's!/var/www/html!/var/www/html/public!g' {{ item }}"
+  with_items:
+    - "{{ doc_root_defines }}"
+
+- name: copy xdebug.ini
+  command: "docker cp {{ role_path }}/files/php.d {{ php_container_name }}:/etc"

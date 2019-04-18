@@ -1,0 +1,5 @@
+---
+- name: provisioning for dev-server
+  hosts: localhost
+  roles:
+    - docker-php

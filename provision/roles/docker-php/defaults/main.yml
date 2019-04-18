@@ -1,0 +1,7 @@
+---
+php_network: php-app
+php_tag: 7.2
+php_container_name: php
+php_app_deploy_path: ../
+doc_root_defines:
+  - /etc/httpd/conf/httpd.conf
