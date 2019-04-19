@@ -24,12 +24,12 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $login_form = $request->validatedForm();
-        logger()->debug('', $login_form->getCredential());
+        $loginForm = $request->validatedForm();
+        logger()->debug('', $loginForm->getCredential());
 
         // とりあえずremember tokenをデフォルトで覚えさせておく
         $is_remember = (bool)$request->get('remember', true);
-        if (auth()->attempt($login_form->getCredential(), $is_remember)) {
+        if (auth()->attempt($loginForm->getCredential(), $is_remember)) {
             return 'auth';
         }
         flash(__('auth.failed'))->error();
